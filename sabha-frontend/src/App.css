@@ -1,24 +1,501 @@
-#root {
-  max-width: 1280px;
+/* src/App.css */
+
+:root {
+  --sabha-bg: #f6efe1;
+  --sabha-bg-alt: #fdf8ee;
+  --sabha-text: #2d2018;
+  --sabha-muted: #7f6350;
+  --sabha-accent: #8b3e2f;
+  --sabha-accent-soft: rgba(139, 62, 47, 0.18);
+  --sabha-gold: #b27c38;
+  --sabha-border: rgba(130, 92, 57, 0.22);
+  --sabha-card: rgba(255, 251, 244, 0.82);
+  --sabha-shadow: 0 18px 40px rgba(66, 39, 22, 0.12);
+}
+
+.sabha-root {
+  position: relative;
+  min-height: 100vh;
+  padding: 28px 6vw 40px;
+  color: var(--sabha-text);
+  background:
+    radial-gradient(circle at 12% 20%, rgba(178, 124, 56, 0.18), transparent 38%),
+    radial-gradient(circle at 90% 0%, rgba(139, 62, 47, 0.1), transparent 44%),
+    linear-gradient(180deg, #fdf8ee 0%, #f7f0e2 54%, #f2e7d5 100%);
+  overflow-x: hidden;
+}
+
+.sabha-bg-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.34;
+  background-image:
+    radial-gradient(circle at 15% 12%, rgba(178, 124, 56, 0.2) 0, transparent 30%),
+    radial-gradient(circle at 86% 80%, rgba(139, 62, 47, 0.14) 0, transparent 34%),
+    linear-gradient(
+      transparent 0,
+      transparent calc(100% - 1px),
+      rgba(123, 84, 53, 0.14) calc(100% - 1px)
+    );
+  background-size: auto, auto, 100% 28px;
+}
+
+.sabha-header {
+  max-width: 1120px;
+  margin: 0 auto 34px;
+  padding: 12px 14px;
+  border: 1px solid var(--sabha-border);
+  border-radius: 999px;
+  background: rgba(255, 253, 248, 0.76);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 12px 24px rgba(75, 43, 20, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.sabha-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.94rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.sabha-logo-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--sabha-gold);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sabha-accent);
+  font-family: "Noto Serif Devanagari", serif;
+  font-size: 1.2rem;
+  background: radial-gradient(circle at 30% 25%, #ffe5bb, #e7bf84);
+  box-shadow: 0 4px 14px rgba(107, 67, 32, 0.25);
+}
+
+.sabha-logo-text {
+  font-weight: 600;
+}
+
+.sabha-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.sabha-nav a {
+  text-decoration: none;
+  color: var(--sabha-muted);
+  font-weight: 600;
+  font-size: 0.88rem;
+  padding: 7px 11px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition: all 0.24s ease;
+}
+
+.sabha-nav a:hover {
+  color: var(--sabha-accent);
+  border-color: var(--sabha-accent-soft);
+  background: rgba(255, 246, 233, 0.86);
+}
+
+.sabha-nav-cta {
+  color: var(--sabha-accent) !important;
+  border-color: rgba(139, 62, 47, 0.3) !important;
+  background: rgba(255, 242, 226, 0.7);
+}
+
+.sabha-main {
+  max-width: 1120px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.sabha-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
+  gap: 34px;
+  align-items: center;
+  padding: 10px 0 56px;
+  border-bottom: 1px solid var(--sabha-border);
 }
 
-@keyframes logo-spin {
+.sabha-sanskrit-tagline {
+  margin: 0 0 10px;
+  color: var(--sabha-accent);
+  font-family: "Noto Serif Devanagari", serif;
+  letter-spacing: 0.06em;
+  font-size: 0.96rem;
+}
+
+.sabha-hero h1 {
+  margin: 0 0 14px;
+  font-size: clamp(2.4rem, 5vw, 3.35rem);
+  line-height: 1.1;
+}
+
+.sabha-highlight {
+  color: var(--sabha-accent);
+}
+
+.sabha-hero-subtitle {
+  margin: 0 0 18px;
+  max-width: 62ch;
+  color: var(--sabha-muted);
+  font-size: 1.03rem;
+  line-height: 1.7;
+}
+
+.sabha-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.sabha-hero-caption {
+  margin: 0;
+  font-size: 0.87rem;
+  color: #8a6b56;
+}
+
+.sabha-button {
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 9px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease,
+    background 0.2s ease, color 0.2s ease;
+}
+
+.sabha-button.primary {
+  color: #fff9f0;
+  border-color: rgba(126, 53, 39, 0.6);
+  background: linear-gradient(145deg, #9d4835 0%, #7f3428 70%);
+  box-shadow: 0 10px 22px rgba(101, 43, 31, 0.32);
+}
+
+.sabha-button.primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 30px rgba(101, 43, 31, 0.4);
+}
+
+.sabha-button.ghost {
+  background: rgba(255, 252, 246, 0.72);
+  border-color: var(--sabha-border);
+  color: var(--sabha-muted);
+}
+
+.sabha-button.ghost:hover {
+  color: var(--sabha-accent);
+  border-color: rgba(139, 62, 47, 0.42);
+  background: #fff7ea;
+}
+
+.sabha-hero-panel {
+  position: relative;
+  padding: 18px;
+  border-radius: 24px;
+  background: linear-gradient(
+      160deg,
+      rgba(255, 247, 232, 0.88),
+      rgba(250, 238, 219, 0.68)
+    ),
+    repeating-linear-gradient(
+      45deg,
+      rgba(120, 80, 48, 0.04),
+      rgba(120, 80, 48, 0.04) 2px,
+      rgba(255, 255, 255, 0) 2px,
+      rgba(255, 255, 255, 0) 8px
+    );
+  border: 1px solid var(--sabha-border);
+  box-shadow: var(--sabha-shadow);
+}
+
+.sabha-mandala {
+  position: relative;
+  width: min(270px, 80vw);
+  aspect-ratio: 1 / 1;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 42%, #fff8ea 0, #efd5ac 48%, #e4c18a 100%);
+  border: 1px solid rgba(143, 89, 44, 0.5);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 245, 227, 0.7),
+    0 14px 30px rgba(104, 68, 39, 0.24);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.sabha-mandala::before,
+.sabha-mandala::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+.sabha-mandala::before {
+  inset: 13%;
+  border: 1px dashed rgba(117, 74, 41, 0.36);
+  animation: slow-spin 24s linear infinite;
+}
+
+.sabha-mandala::after {
+  inset: 25%;
+  border: 1px solid rgba(139, 62, 47, 0.42);
+}
+
+.sabha-mandala-center {
+  z-index: 2;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Noto Serif Devanagari", serif;
+  font-size: 2.3rem;
+  color: #5b261e;
+  background: radial-gradient(circle at 35% 20%, #ffeecf, #efc88f);
+  border: 1px solid rgba(124, 75, 38, 0.5);
+  box-shadow: 0 10px 16px rgba(94, 57, 29, 0.24);
+}
+
+.sabha-mandala-node {
+  position: absolute;
+  z-index: 2;
+  white-space: nowrap;
+  border-radius: 999px;
+  border: 1px solid rgba(130, 84, 50, 0.34);
+  background: rgba(255, 249, 238, 0.95);
+  color: #6a4530;
+  padding: 3px 10px;
+  font-size: 0.74rem;
+  font-family: "Noto Serif Devanagari", serif;
+  box-shadow: 0 6px 14px rgba(102, 67, 37, 0.16);
+}
+
+.sabha-mandala-node.n1 {
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.sabha-mandala-node.n2 {
+  bottom: 13%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.sabha-mandala-node.n3 {
+  top: 50%;
+  left: 4%;
+  transform: translateY(-50%);
+}
+
+.sabha-mandala-node.n4 {
+  top: 50%;
+  right: 4%;
+  transform: translateY(-50%);
+}
+
+.sabha-hero-panel-card {
+  border-radius: 16px;
+  border: 1px solid rgba(130, 84, 50, 0.22);
+  padding: 14px;
+  background: rgba(255, 252, 247, 0.78);
+}
+
+.sabha-panel-title {
+  margin: 0 0 4px;
+  font-weight: 700;
+  color: var(--sabha-accent);
+}
+
+.sabha-panel-body {
+  margin: 0;
+  color: var(--sabha-muted);
+  line-height: 1.65;
+}
+
+.sabha-section {
+  position: relative;
+  padding: 42px 0;
+  border-bottom: 1px solid var(--sabha-border);
+  animation: fade-up 0.7s ease both;
+}
+
+.sabha-section::before {
+  content: "✶";
+  position: absolute;
+  right: 2px;
+  top: 8px;
+  font-size: 0.88rem;
+  color: rgba(139, 62, 47, 0.34);
+}
+
+.sabha-section-alt {
+  background: rgba(255, 251, 243, 0.6);
+  margin: 0 -6vw;
+  padding-inline: 6vw;
+}
+
+.sabha-section-header {
+  max-width: 670px;
+  margin-bottom: 22px;
+}
+
+.sabha-section-header h2 {
+  margin: 0 0 5px;
+  color: var(--sabha-accent);
+  font-size: 1.7rem;
+}
+
+.sabha-section-subtitle {
+  margin: 0;
+  color: var(--sabha-muted);
+  line-height: 1.6;
+}
+
+.sabha-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.sabha-card {
+  border-radius: 16px;
+  border: 1px solid var(--sabha-border);
+  background: var(--sabha-card);
+  box-shadow: 0 10px 20px rgba(82, 51, 25, 0.08);
+  padding: 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sabha-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(82, 51, 25, 0.13);
+}
+
+.sabha-card h3 {
+  margin: 0 0 6px;
+  color: var(--sabha-accent);
+  font-size: 1.05rem;
+}
+
+.sabha-card p {
+  margin: 0;
+  color: var(--sabha-muted);
+}
+
+.sabha-arch-layout {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.sabha-arch-column {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sabha-arch-step {
+  border-radius: 16px;
+  border: 1px solid var(--sabha-border);
+  padding: 14px;
+  background:
+    radial-gradient(circle at top right, rgba(178, 124, 56, 0.1), transparent 58%),
+    rgba(255, 253, 248, 0.85);
+}
+
+.sabha-arch-step h3 {
+  margin: 6px 0 5px;
+  color: var(--sabha-accent);
+}
+
+.sabha-arch-step p {
+  margin: 0;
+  color: var(--sabha-muted);
+}
+
+.sabha-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(139, 62, 47, 0.32);
+  background: rgba(255, 244, 227, 0.72);
+  color: #7c3d2e;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+.sabha-footer-cta {
+  border-bottom: 0;
+  padding-bottom: 18px;
+}
+
+.sabha-contact-form {
+  max-width: 560px;
+}
+
+.sabha-contact-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.sabha-contact-row input {
+  flex: 1;
+  border: 1px solid var(--sabha-border);
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-size: 0.92rem;
+  color: var(--sabha-text);
+  background: rgba(255, 252, 247, 0.9);
+  outline: none;
+}
+
+.sabha-contact-row input::placeholder {
+  color: #9e7d64;
+}
+
+.sabha-contact-row input:focus {
+  border-color: rgba(139, 62, 47, 0.56);
+  box-shadow: 0 0 0 3px rgba(139, 62, 47, 0.12);
+}
+
+.sabha-contact-note {
+  margin: 0;
+  color: var(--sabha-muted);
+  font-size: 0.83rem;
+}
+
+.sabha-footer {
+  padding-top: 12px;
+  display: flex;
+  justify-content: center;
+  color: #8b6d57;
+  font-size: 0.8rem;
+}
+
+@keyframes slow-spin {
   from {
     transform: rotate(0deg);
   }
@@ -27,16 +504,73 @@
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-.card {
-  padding: 2em;
+@media (prefers-reduced-motion: reduce) {
+  .sabha-section {
+    animation: none;
+  }
+
+  .sabha-mandala::before {
+    animation: none;
+  }
 }
 
-.read-the-docs {
-  color: #888;
+@media (max-width: 940px) {
+  .sabha-header {
+    border-radius: 24px;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .sabha-hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sabha-hero-panel {
+    order: -1;
+  }
+
+  .sabha-grid-3,
+  .sabha-arch-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 680px) {
+  .sabha-root {
+    padding-inline: 4vw;
+  }
+
+  .sabha-section-alt {
+    margin-inline: -4vw;
+    padding-inline: 4vw;
+  }
+
+  .sabha-contact-row {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 600px) {
+  .sabha-root {
+    padding-inline: 18px;
+  }
+
+  .sabha-contact-row {
+    flex-direction: column;
+  }
+
+  .sabha-hero {
+    padding-top: 20px;
+  }
 }
