@@ -1,6 +1,6 @@
 // src/App.jsx
 import React from "react";
-import Landing from "./Landing.jsx";
+import Landing from "./pages/Landing.jsx";
 
 export default function App() {
   return <Landing />;

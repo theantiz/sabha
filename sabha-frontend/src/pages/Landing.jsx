@@ -1,4 +1,5 @@
 import React from "react";
+import Navbar from "../components/Navbar.jsx";
 
 export default function Landing() {
   return (
@@ -7,38 +8,7 @@ export default function Landing() {
       <div className="pointer-events-none fixed inset-0 -z-10 opacity-35 bg-[radial-gradient(circle_at_15%_12%,rgba(178,124,56,.2)_0,transparent_30%),radial-gradient(circle_at_86%_80%,rgba(139,62,47,.14)_0,transparent_34%),linear-gradient(transparent_0,transparent_calc(100%_-_1px),rgba(123,84,53,.14)_calc(100%_-_1px))] [background-size:auto,auto,100%_28px]" />
 
       <div className="mx-auto max-w-[1120px] px-[min(12vw,48px)] pt-7 pb-10">
-        {/* header */}
-        <header className="mx-auto mb-9 flex max-w-[1120px] flex-wrap items-center justify-between gap-5 rounded-full border border-[rgba(130,92,57,.22)] bg-[rgba(255,253,248,.88)] px-4 py-3 shadow-[0_12px_32px_rgba(75,43,20,.12),inset_0_1px_0_rgba(255,255,255,.5)] backdrop-blur-xl">
-          <div className="flex items-center gap-2 text-[0.94rem] font-semibold tracking-[0.14em] uppercase">
-            <span className="inline-flex h-[34px] w-[34px] items-center justify-center rounded-full border border-sabhaGold bg-[radial-gradient(circle_at_30%_25%,#ffe5bb,#e7bf84)] font-dev text-[1.2rem] text-sabhaAccent shadow-[0_4px_14px_rgba(107,67,32,.25),inset_0_1px_2px_rgba(255,255,255,.6)] transition hover:scale-[1.08] hover:shadow-[0_6px_18px_rgba(107,67,32,.35),inset_0_1px_2px_rgba(255,255,255,.6)]">
-              स
-            </span>
-            <span>Sabha</span>
-          </div>
-
-          <nav className="flex flex-wrap items-center gap-2">
-            {[
-              ["#about", "About"],
-              ["#architecture", "Architecture"],
-              ["#use-cases", "Use Cases"],
-            ].map(([href, label]) => (
-              <a
-                key={href}
-                href={href}
-                className="rounded-full px-3 py-[7px] text-[0.88rem] font-semibold text-sabhaMuted transition hover:-translate-y-[1px] hover:border hover:border-[rgba(139,62,47,.30)] hover:bg-[rgba(255,246,233,.95)] hover:text-sabhaAccent"
-              >
-                {label}
-              </a>
-            ))}
-
-            <a
-              href="#contact"
-              className="rounded-full border border-[rgba(139,62,47,.40)] bg-[linear-gradient(135deg,rgba(255,242,226,.85),rgba(255,235,205,.80))] px-3 py-[7px] text-[0.88rem] font-semibold text-sabhaAccent shadow-[inset_0_1px_0_rgba(255,255,255,.4),0_2px_8px_rgba(139,62,47,.1)] transition hover:shadow-[inset_0_1px_0_rgba(255,255,255,.4),0_4px_12px_rgba(139,62,47,.15)]"
-            >
-              Join the Assembly
-            </a>
-          </nav>
-        </header>
+        <Navbar />
 
         <main className="mx-auto max-w-[1120px]">
           {/* hero */}
