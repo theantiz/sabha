@@ -1,29 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;500;600;700&family=Noto+Serif+Devanagari:wght@500;700&display=swap");
 
-:root {
-  font-family: "Manrope", sans-serif;
-  line-height: 1.55;
-  font-weight: 400;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@import "tailwindcss";
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  min-width: 320px;
-}
-
-h1,
-h2,
-h3 {
-  font-family: "Marcellus", serif;
-  font-weight: 400;
-}
+/* optional: your global tweaks */
+html, body { height: 100%; }
