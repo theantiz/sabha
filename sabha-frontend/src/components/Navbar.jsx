@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 
 const navLinks = [
-  ["#about", "About"],
-  ["#architecture", "Architecture"],
-  ["#use-cases", "Use Cases"],
+  ["/#about", "About"],
+  ["/#architecture", "Architecture"],
+  ["/#use-cases", "Use Cases"],
+  ["/demo", "Demo"],
 ];
 
 export default function Navbar() {
@@ -21,7 +22,7 @@ export default function Navbar() {
 
         <div className="flex items-center gap-2 sm:hidden">
           <a
-            href="#contact"
+            href="/#contact"
             className="rounded-full border border-[rgba(139,62,47,.40)] bg-[linear-gradient(135deg,rgba(255,242,226,.85),rgba(255,235,205,.80))] px-3 py-[7px] text-[0.82rem] font-semibold text-sabhaAccent shadow-[inset_0_1px_0_rgba(255,255,255,.4),0_2px_8px_rgba(139,62,47,.1)] transition hover:shadow-[inset_0_1px_0_rgba(255,255,255,.4),0_4px_12px_rgba(139,62,47,.15)]"
           >
             Join
@@ -50,7 +51,7 @@ export default function Navbar() {
         ))}
 
         <a
-          href="#contact"
+          href="/#contact"
           className="rounded-full border border-[rgba(139,62,47,.40)] bg-[linear-gradient(135deg,rgba(255,242,226,.85),rgba(255,235,205,.80))] px-3 py-[7px] text-[0.88rem] font-semibold text-sabhaAccent shadow-[inset_0_1px_0_rgba(255,255,255,.4),0_2px_8px_rgba(139,62,47,.1)] transition hover:shadow-[inset_0_1px_0_rgba(255,255,255,.4),0_4px_12px_rgba(139,62,47,.15)]"
         >
           Join the Assembly
@@ -70,7 +71,7 @@ export default function Navbar() {
             </a>
           ))}
           <a
-            href="#contact"
+            href="/#contact"
             onClick={() => setOpen(false)}
             className="rounded-full border border-[rgba(139,62,47,.40)] bg-[linear-gradient(135deg,rgba(255,242,226,.85),rgba(255,235,205,.80))] px-3 py-2 text-[0.9rem] font-semibold text-sabhaAccent shadow-[inset_0_1px_0_rgba(255,255,255,.4),0_2px_8px_rgba(139,62,47,.1)]"
           >
