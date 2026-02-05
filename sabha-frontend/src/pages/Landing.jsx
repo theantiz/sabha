@@ -3,17 +3,21 @@ import Navbar from "../components/Navbar.jsx";
 
 export default function Landing() {
   return (
-    <div className="min-h-screen overflow-x-hidden text-sabhaText bg-[radial-gradient(circle_at_12%_20%,rgba(178,124,56,.18),transparent_38%),radial-gradient(circle_at_90%_0%,rgba(139,62,47,.10),transparent_44%),linear-gradient(180deg,#fdf8ee_0%,#f7f0e2_54%,#f2e7d5_100%)]">
+    <div className="min-h-screen overflow-x-hidden text-sabhaText bg-[linear-gradient(180deg,#fbf9f5_0%,#f6f2ea_55%,#f1ece2_100%)]">
       {/* overlay */}
-      <div className="pointer-events-none fixed inset-0 -z-10 opacity-35 bg-[radial-gradient(circle_at_15%_12%,rgba(178,124,56,.2)_0,transparent_30%),radial-gradient(circle_at_86%_80%,rgba(139,62,47,.14)_0,transparent_34%),linear-gradient(transparent_0,transparent_calc(100%_-_1px),rgba(123,84,53,.14)_calc(100%_-_1px))] [background-size:auto,auto,100%_28px]" />
+      <div className="pointer-events-none fixed inset-0 -z-10 opacity-25 bg-[radial-gradient(circle_at_12%_14%,rgba(178,124,56,.12)_0,transparent_36%),radial-gradient(circle_at_88%_78%,rgba(139,62,47,.08)_0,transparent_38%)] sabha-fade" />
 
-      <div className="mx-auto max-w-[1120px] px-[min(12vw,48px)] pt-7 pb-10">
-        <Navbar />
+      <div className="sabha-page-box">
+        <div
+          className="mx-auto max-w-[1120px] px-[var(--page-gutter)] pt-7 pb-10"
+          style={{ "--page-gutter": "clamp(18px, 6vw, 140px)" }}
+        >
+          <Navbar />
 
-        <main className="mx-auto max-w-[1120px]">
+          <main className="mx-auto max-w-[1120px]">
           {/* hero */}
           <section className="grid items-center gap-8 border-b border-[rgba(130,92,57,.22)] pb-14 pt-2 md:grid-cols-[minmax(0,3fr)_minmax(0,2.2fr)]">
-            <div>
+            <div className="sabha-reveal" style={{ animationDelay: "80ms" }}>
               <p className="mb-2 font-dev text-[0.96rem] tracking-[0.06em] text-sabhaAccent">
                 सभायां युक्तिर्जायते ॥
               </p>
@@ -23,29 +27,34 @@ export default function Landing() {
               </h1>
 
               <p className="mb-4 max-w-[62ch] text-[1.03rem] leading-7 text-sabhaMuted">
-                A modern डिजिटल सभा where models discuss, debate, and reason like a council
-                of thinkers. Orchestrate multiple LLMs, align perspectives, and converge on
-                deeper, more trustworthy insight.
+                A modern digital assembly where models discuss, debate, and reason together.
+                Orchestrate multiple LLMs, align perspectives, and reach clearer insight.
               </p>
 
-              <div className="mb-3 flex flex-wrap gap-2">
-                <button className="rounded-full border border-[rgba(126,53,39,.6)] bg-[linear-gradient(145deg,#9d4835_0%,#7f3428_70%)] px-4 py-[9px] text-[0.9rem] font-semibold text-[#fff9f0] shadow-[0_10px_22px_rgba(101,43,31,.32),inset_0_1px_0_rgba(255,255,255,.2)] transition hover:-translate-y-0.5 hover:shadow-[0_14px_32px_rgba(101,43,31,.4),inset_0_1px_0_rgba(255,255,255,.2)] active:translate-y-0 active:shadow-[0_6px_16px_rgba(101,43,31,.32),inset_0_1px_0_rgba(255,255,255,.2)]">
+              <div className="mb-4 flex flex-wrap gap-3">
+                <button className="rounded-full border border-[rgba(126,53,39,.45)] bg-[#8f3f31] px-4 py-[9px] text-[0.9rem] font-semibold text-[#fff9f0] shadow-[0_8px_18px_rgba(101,43,31,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(101,43,31,.28)] active:translate-y-0">
                   अनुभव आरभ्यते (Start Now)
                 </button>
 
-                <button className="rounded-full border border-[rgba(130,92,57,.22)] bg-[rgba(255,252,246,.8)] px-4 py-[9px] text-[0.9rem] font-semibold text-sabhaMuted shadow-[inset_0_1px_0_rgba(255,255,255,.5)] transition hover:-translate-y-0.5 hover:border-[rgba(139,62,47,.5)] hover:bg-[linear-gradient(135deg,rgba(255,252,246,.95),rgba(255,247,232,.9))] hover:text-sabhaAccent hover:shadow-[0_6px_16px_rgba(82,51,25,.1),inset_0_1px_0_rgba(255,255,255,.5)]">
+                <a
+                  href="/demo"
+                  className="rounded-full border border-[rgba(130,92,57,.22)] bg-white px-4 py-[9px] text-[0.9rem] font-semibold text-sabhaMuted shadow-[0_6px_14px_rgba(82,51,25,.08)] transition hover:-translate-y-0.5 hover:border-[rgba(139,62,47,.4)] hover:text-sabhaAccent hover:shadow-[0_8px_18px_rgba(82,51,25,.12)]"
+                >
                   दर्शन पश्य (View Demo)
-                </button>
+                </a>
               </div>
 
               <p className="text-[0.87rem] text-[#8a6b56]">
-                Inspired by the ancient भारतीय सभासद् tradition of collective deliberation,
-                reimagined for autonomous AI systems.
+                Inspired by the ancient tradition of collective deliberation, adapted for
+                modern AI systems.
               </p>
             </div>
 
             {/* right panel */}
-            <div className="rounded-3xl border border-[rgba(130,92,57,.22)] bg-[linear-gradient(160deg,rgba(255,247,232,.88),rgba(250,238,219,.68)),repeating-linear-gradient(45deg,rgba(120,80,48,.04),rgba(120,80,48,.04)_2px,rgba(255,255,255,0)_2px,rgba(255,255,255,0)_8px)] p-5 shadow-sabha">
+            <div
+              className="rounded-3xl border border-[rgba(130,92,57,.18)] bg-white p-5 shadow-[0_16px_40px_rgba(76,48,28,.12)] sabha-reveal"
+              style={{ animationDelay: "180ms" }}
+            >
               <div className="mx-auto mb-4 flex aspect-square w-[min(270px,80vw)] items-center justify-center overflow-hidden rounded-full border border-[rgba(143,89,44,.6)] bg-[radial-gradient(circle_at_50%_42%,#fff8ea_0,#efd5ac_48%,#e4c18a_100%)] shadow-[inset_0_0_0_1px_rgba(255,245,227,.9),inset_0_8px_16px_rgba(255,255,255,.4),0_18px_40px_rgba(104,68,39,.28),0_0_40px_rgba(178,124,56,.12)] animate-gentlePulse relative">
                 <div className="absolute inset-[13%] rounded-full border border-dashed border-[rgba(117,74,41,.36)] animate-slowSpin" />
                 <div className="absolute inset-[25%] rounded-full border border-[rgba(139,62,47,.42)]" />
@@ -72,52 +81,52 @@ export default function Landing() {
                 ))}
               </div>
 
-              <div className="rounded-2xl border border-[rgba(130,84,50,.22)] bg-[rgba(255,252,247,.78)] p-4">
+              <div className="rounded-2xl border border-[rgba(130,84,50,.2)] bg-[rgba(255,255,255,.9)] p-4">
                 <p className="mb-1 font-bold text-sabhaAccent">Deliberative Reasoning Engine</p>
                 <p className="leading-7 text-sabhaMuted">
                   Route prompts through a council of specialized models. Capture arguments,
-                  counter-arguments, and final consensus—fully traceable.
+                  counterpoints, and consensus with a clear trace.
                 </p>
               </div>
             </div>
           </section>
 
           {/* sections */}
-          <Section id="about" title="What is Sabha?" alt>
-            In संस्कृत, “Sabha” denotes an assembly – a gathering for thoughtful discourse.
-            This project brings that ethos to AI systems.
+          <Section id="about" title="What is Sabha?" alt delay={220}>
+            In Sanskrit, "Sabha" means an assembly for thoughtful discussion. This project
+            brings that idea to AI systems.
             <Cards
               items={[
-                ["Multi-Model संवाद", "Orchestrate multiple models in structured dialogue. Each plays a भूमिका (role): critic, explainer, planner, or judge."],
-                ["Structured तर्क", "Capture arguments as trees, not just text. Keep the reasoning trail visible, auditable, and reusable."],
-                ["Consensus सम्मति", "Define aggregation rules: voting, weighted expertise, or human-in-the-loop. Converge without losing dissent."],
+                ["Multi-Model Dialogue", "Orchestrate multiple models in structured dialogue. Each plays a role such as critic, explainer, planner, or judge."],
+                ["Structured Reasoning", "Capture arguments as trees, not just text. Keep the reasoning trail visible, auditable, and reusable."],
+                ["Consensus", "Define rules such as voting, weighted expertise, or human review. Converge without losing dissent."],
               ]}
             />
           </Section>
 
-          <Section id="architecture" title="Architecture as यज्ञ">
-            A layered design inspired by traditional ritual: invocation, offering, deliberation,
+          <Section id="architecture" title="Architecture as यज्ञ" delay={280}>
+            A layered design inspired by ritual stages: invocation, offering, deliberation,
             and resolution.
             <div className="mt-5 grid gap-4 md:grid-cols-2">
-              <ArchStep chip="आवाहनम् · Invocation" title="Orchestrator" body="Receives the user’s प्रश्न (query), chooses participants, and sets the protocol for dialogue." />
-              <ArchStep chip="अर्पणम् · Offering" title="Reasoning Ledger" body="All rationales, objections, and supporting evidence are stored in a structured ledger for replay and analysis." />
-              <ArchStep chip="सम्वादः · Dialogue" title="Council of Models" body="Models exchange messages, critique one another, and refine hypotheses in iterative rounds." />
-              <ArchStep chip="संनिधानम् · Resolution" title="Consensus Engine" body="Applies consensus rules and aligns outcomes with safety, policy, and domain constraints." />
+              <ArchStep chip="आवाहनम् · Invocation" title="Orchestrator" body="Receives the user query, chooses participants, and sets the dialogue protocol." delay={0} />
+              <ArchStep chip="अर्पणम् · Offering" title="Reasoning Ledger" body="Stores rationale, objections, and evidence in a structured ledger for replay and analysis." delay={80} />
+              <ArchStep chip="सम्वादः · Dialogue" title="Council of Models" body="Models exchange messages, critique one another, and refine ideas in rounds." delay={160} />
+              <ArchStep chip="संनिधानम् · Resolution" title="Consensus Engine" body="Applies consensus rules and aligns outcomes with safety and policy constraints." delay={240} />
             </div>
           </Section>
 
-          <Section id="use-cases" title="Where Sabha Shines" alt>
-            Any space that benefits from multiple perspectives and rigorous reasoning.
+          <Section id="use-cases" title="Where Sabha Shines" alt delay={340}>
+            Any area that benefits from multiple perspectives and careful reasoning.
             <Cards
               items={[
-                ["AI Safety Reviews", "Run safety, policy, and red-team models together. Capture disagreements and escalate edge cases to humans."],
-                ["Research & Analysis", "Assemble domain experts that argue for/against hypotheses, then summarize the distilled consensus."],
-                ["Product Decisions", "Use models tuned for UX, engineering, legal, and business to explore trade-offs before committing."],
+                ["AI Safety Reviews", "Run safety, policy, and red team models together. Capture disagreements and escalate edge cases to humans."],
+                ["Research & Analysis", "Assemble domain experts who argue for or against ideas, then summarize the shared view."],
+                ["Product Decisions", "Use models tuned for UX, engineering, legal, and business to explore tradeoffs before committing."],
               ]}
             />
           </Section>
 
-          <Section id="contact" title="Form your own Sabha" footer>
+          <Section id="contact" title="Form your own Sabha" footer delay={400}>
             Bring multi-model assemblies into your stack. Early collaborators, reach out:
             <form className="mt-5 max-w-[560px]" onSubmit={(e) => e.preventDefault()}>
               <div className="flex flex-col gap-2 sm:flex-row">
@@ -134,29 +143,31 @@ export default function Landing() {
                 </button>
               </div>
               <p className="mt-2 text-[0.83rem] text-sabhaMuted">
-                We’ll share design notes, architecture diagrams, and early alpha access.
+                We will share design notes, architecture diagrams, and early access.
               </p>
             </form>
           </Section>
 
-          <footer className="pt-3 text-center text-[0.8rem] text-[#8b6d57]">
+          <footer className="pt-3 text-center text-[0.8rem] text-[#8b6d57] sabha-reveal" style={{ animationDelay: "520ms" }}>
             © {new Date().getFullYear()} Sabha · सभासदां बुद्धिसंग्रहः
           </footer>
-        </main>
+          </main>
+        </div>
       </div>
     </div>
   );
 }
 
-function Section({ id, title, children, alt = false, footer = false }) {
+function Section({ id, title, children, alt = false, footer = false, delay = 0 }) {
   return (
     <section
       id={id}
       className={[
-        "relative border-b border-[rgba(130,92,57,.22)] py-14 animate-fadeUp",
-        alt ? "bg-[rgba(255,251,243,.6)] -mx-[6vw] px-[6vw]" : "",
+        "relative border-b border-[rgba(130,92,57,.22)] py-14 sabha-reveal",
+        alt ? "bg-[rgba(255,255,255,.85)] -mx-[var(--page-gutter)] px-[var(--page-gutter)]" : "",
         footer ? "border-b-0 pb-5" : "",
       ].join(" ")}
+      style={{ animationDelay: `${delay}ms` }}
     >
       <div className="absolute right-[2px] top-2 text-[0.88rem] text-[rgba(139,62,47,.34)]">✶</div>
 
@@ -173,10 +184,11 @@ function Section({ id, title, children, alt = false, footer = false }) {
 function Cards({ items }) {
   return (
     <div className="mt-5 grid gap-4 md:grid-cols-3">
-      {items.map(([h, p]) => (
+      {items.map(([h, p], index) => (
         <div
           key={h}
-          className="relative overflow-hidden rounded-2xl border border-[rgba(130,92,57,.22)] bg-[linear-gradient(135deg,rgba(255,253,248,.95),rgba(255,250,245,.85))] p-4 shadow-[0_10px_20px_rgba(82,51,25,.08),inset_0_1px_0_rgba(255,255,255,.4)] transition hover:-translate-y-1 hover:shadow-[0_18px_36px_rgba(82,51,25,.15),inset_0_1px_0_rgba(255,255,255,.4)]"
+          className="relative overflow-hidden rounded-2xl border border-[rgba(130,92,57,.18)] bg-white p-4 shadow-[0_10px_24px_rgba(82,51,25,.08)] transition hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(82,51,25,.12)] sabha-reveal"
+          style={{ animationDelay: `${index * 90 + 140}ms` }}
         >
           <h3 className="mb-1 text-[1.05rem] font-semibold text-sabhaAccent">{h}</h3>
           <p className="text-sabhaMuted">{p}</p>
@@ -186,9 +198,12 @@ function Cards({ items }) {
   );
 }
 
-function ArchStep({ chip, title, body }) {
+function ArchStep({ chip, title, body, delay = 0 }) {
   return (
-    <div className="rounded-2xl border border-[rgba(130,92,57,.22)] bg-[radial-gradient(circle_at_top_right,rgba(178,124,56,.1),transparent_58%),rgba(255,253,248,.85)] p-4">
+    <div
+      className="rounded-2xl border border-[rgba(130,92,57,.18)] bg-white p-4 shadow-[0_10px_24px_rgba(82,51,25,.08)] sabha-reveal"
+      style={{ animationDelay: `${delay}ms` }}
+    >
       <span className="inline-flex items-center rounded-full border border-[rgba(139,62,47,.32)] bg-[rgba(255,244,227,.72)] px-[10px] py-[3px] text-[0.7rem] font-bold tracking-[0.08em] text-[#7c3d2e] uppercase">
         {chip}
       </span>

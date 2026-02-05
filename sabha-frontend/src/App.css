@@ -11,12 +11,13 @@
   --sabha-border: rgba(130, 92, 57, 0.22);
   --sabha-card: rgba(255, 251, 244, 0.82);
   --sabha-shadow: 0 18px 40px rgba(66, 39, 22, 0.12);
+  --sabha-gutter: clamp(18px, 6vw, 140px);
 }
 
 .sabha-root {
   position: relative;
   min-height: 100vh;
-  padding: 28px 12vw 40px;
+  padding: 28px var(--sabha-gutter) 40px;
   color: var(--sabha-text);
   background:
     radial-gradient(circle at 12% 20%, rgba(178, 124, 56, 0.18), transparent 38%),
@@ -40,6 +41,16 @@
       rgba(123, 84, 53, 0.14) calc(100% - 1px)
     );
   background-size: auto, auto, 100% 28px;
+}
+
+.sabha-page-box {
+  max-width: 1280px;
+  margin: 22px auto 30px;
+  border-radius: 26px;
+  border: 1px solid rgba(106, 80, 58, 0.14);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 14px 40px rgba(52, 36, 24, 0.12);
+  overflow: hidden;
 }
 
 .sabha-header {
@@ -400,8 +411,8 @@
 
 .sabha-section-alt {
   background: rgba(255, 251, 243, 0.6);
-  margin: 0 -6vw;
-  padding-inline: 6vw;
+  margin: 0 calc(var(--sabha-gutter) * -1);
+  padding-inline: var(--sabha-gutter);
 }
 
 .sabha-section-header {
@@ -600,6 +611,36 @@
   }
 }
 
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.sabha-reveal {
+  opacity: 0;
+  animation: rise-in 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.sabha-fade {
+  opacity: 0;
+  animation: fade-in 0.9s ease both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .sabha-section {
     animation: none;
@@ -607,6 +648,13 @@
 
   .sabha-mandala::before {
     animation: none;
+  }
+
+  .sabha-reveal,
+  .sabha-fade {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -632,13 +680,9 @@
 }
 
 @media (max-width: 680px) {
-  .sabha-root {
-    padding-inline: 4vw;
-  }
-
-  .sabha-section-alt {
-    margin-inline: -4vw;
-    padding-inline: 4vw;
+  .sabha-page-box {
+    margin: 10px 10px 18px;
+    border-radius: 16px;
   }
 
   .sabha-contact-row {
@@ -647,10 +691,6 @@
 }
 
 @media (max-width: 600px) {
-  .sabha-root {
-    padding-inline: 18px;
-  }
-
   .sabha-contact-row {
     flex-direction: column;
   }
