@@ -139,7 +139,7 @@ export default function Demo() {
                       Live Assembly
                     </p>
                     <h1 className="mt-1 text-[clamp(1.7rem,3.4vw,2.4rem)] font-serif">
-                      Sabha Demo
+                      Sabha Beta
                     </h1>
                   </div>
                   <span className="rounded-full border border-[rgba(139,62,47,.2)] bg-[rgba(255,245,232,.7)] px-3 py-1 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-sabhaAccent">
