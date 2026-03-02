@@ -47,9 +47,70 @@ export default function Demo() {
     "How should teams balance AI speed and safety when shipping new features?"
   );
   const [activeTopic, setActiveTopic] = useState(topic);
+  const [loading, setLoading] = useState(false);
+  const [sessionId, setSessionId] = useState(null);
+  const [consensus, setConsensus] = useState(
+    "The council favors a two speed system: rapid iteration in contained sandboxes, and gated releases with mandatory evals and red team checks."
+  );
 
   const bots = useMemo(() => BOT_META, []);
-  const discussion = useMemo(() => DISCUSSION, []);
+  const [discussion, setDiscussion] = useState([]);
+
+  const handleStartDiscussion = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setActiveTopic(topic);
+
+    try {
+      // Create session
+      const sessionRes = await fetch('http://localhost:8000/api/sessions/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          title: 'Sabha Demo Discussion',
+          topic: topic
+        })
+      });
+
+      if (!sessionRes.ok) throw new Error('Failed to create session');
+      
+      const session = await sessionRes.json();
+      setSessionId(session.id);
+
+      // Trigger council
+      const councilRes = await fetch(
+        `http://localhost:8000/api/sessions/${session.id}/messages/`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ content: topic })
+        }
+      );
+
+      if (!councilRes.ok) throw new Error('Failed to run council');
+      
+      const data = await councilRes.json();
+      
+      // Extract agent messages and format for display
+      const agentMessages = data.messages
+        .filter(m => m.role === 'agent')
+        .map(m => ({
+          bot: m.agent_name,
+          phase: m.phase.charAt(0).toUpperCase() + m.phase.slice(1),
+          body: m.content
+        }));
+
+      setDiscussion(agentMessages);
+      setConsensus(data.consensus || agentMessages[agentMessages.length - 1]?.body);
+
+    } catch (error) {
+      console.error('Error:', error);
+      alert(`Error: ${error.message}. Make sure backend is running on port 8000.`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   return (
     <div className="min-h-screen overflow-x-hidden text-sabhaText bg-[linear-gradient(180deg,#fbf9f5_0%,#f6f2ea_55%,#f1ece2_100%)]">
@@ -70,8 +131,8 @@ export default function Demo() {
                     <p className="text-[0.78rem] font-semibold tracking-[0.24em] text-sabhaMuted uppercase">
                       Live Assembly
                     </p>
-                    <h1 className="mt-1 text-[clamp(1.7rem,3.4vw,2.4rem)] font-serif">
-                      Sabha Demo
+                    <h1 className="text-3xl font-serif text-sabhaHeading sm:text-4xl">
+                      Sabha Beta
                     </h1>
                   </div>
                   <span className="rounded-full border border-[rgba(139,62,47,.2)] bg-[rgba(255,245,232,.7)] px-3 py-1 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-sabhaAccent">
@@ -86,10 +147,7 @@ export default function Demo() {
 
                 <form
                   className="mt-4 space-y-3 sm:space-y-4"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    setActiveTopic(topic);
-                  }}
+                  onSubmit={handleStartDiscussion}
                 >
                   <label className="text-[0.78rem] font-semibold uppercase tracking-[0.18em] text-sabhaMuted">
                     Topic
@@ -98,18 +156,20 @@ export default function Demo() {
                     value={topic}
                     onChange={(e) => setTopic(e.target.value)}
                     rows={4}
-                    className="w-full resize-none rounded-2xl border border-[rgba(130,92,57,.2)] bg-[#fcfbf8] px-4 py-3 text-sm leading-6 text-sabhaText shadow-[inset_0_1px_0_rgba(255,255,255,.8)] outline-none transition focus:border-[rgba(139,62,47,.5)] focus:bg-white focus:shadow-[0_0_0_4px_rgba(139,62,47,.12)] sm:text-[0.95rem]"
+                    disabled={loading}
+                    className="w-full resize-none rounded-2xl border border-[rgba(130,92,57,.2)] bg-[#fcfbf8] px-4 py-3 text-sm leading-6 text-sabhaText shadow-[inset_0_1px_0_rgba(255,255,255,.8)] outline-none transition focus:border-[rgba(139,62,47,.5)] focus:bg-white focus:shadow-[0_0_0_4px_rgba(139,62,47,.12)] disabled:opacity-50 sm:text-[0.95rem]"
                     placeholder="Enter a topic for the assembly..."
                   />
                   <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                     <button
                       type="submit"
-                      className="rounded-full border border-[rgba(126,53,39,.45)] bg-[#8f3f31] px-4 py-[9px] text-[0.88rem] font-semibold text-[#fff9f0] shadow-[0_8px_18px_rgba(101,43,31,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(101,43,31,.28)] active:translate-y-0"
+                      disabled={loading || !topic.trim()}
+                      className="rounded-full border border-[rgba(126,53,39,.45)] bg-[#8f3f31] px-4 py-[9px] text-[0.88rem] font-semibold text-[#fff9f0] shadow-[0_8px_18px_rgba(101,43,31,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(101,43,31,.28)] active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
                     >
-                      Start Discussion
+                      {loading ? 'Council Deliberating...' : 'Start Discussion'}
                     </button>
                     <span className="text-[0.78rem] text-sabhaMuted">
-                      Placeholder output until API is wired.
+                      {loading ? 'Running 5 agents (30-60s)...' : 'Live API connected ✓'}
                     </span>
                   </div>
                 </form>
@@ -143,8 +203,7 @@ export default function Demo() {
                 </p>
                 <h3 className="mt-2 text-lg font-serif text-sabhaAccent">Shared outcome</h3>
                 <p className="mt-2 text-sm leading-6 text-sabhaMuted sm:text-[0.95rem]">
-                  The council favors a two speed system: rapid iteration in contained
-                  sandboxes, and gated releases with mandatory evals and red team checks.
+                  {consensus}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {["Tiered Risk", "Sandbox First", "Red-Team Gate", "Audit Trail"].map((tag) => (
@@ -192,7 +251,35 @@ export default function Demo() {
                         </div>
                         <span className="text-[0.7rem] text-sabhaMuted">Round {index + 1}</span>
                       </div>
-                      <p className="mt-2 text-sm leading-6 text-sabhaMuted">{entry.body}</p>
+                      
+                      {/* Agent Response */}
+                      <div className="mt-3">
+                        <div className="flex items-start gap-2">
+                          <span className="mt-1 text-[0.7rem]">💭</span>
+                          <div className="flex-1">
+                            <p className="text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-sabhaMuted mb-1">
+                              Reasoning
+                            </p>
+                            <p className="text-sm leading-6 text-sabhaMuted/70 italic">
+                              "{meta?.role || 'Agent'} analyzes the topic from {entry.phase} perspective, 
+                              considering prior council input and providing {meta?.tone?.toLowerCase() || 'reasoned'} insight."
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Final Answer */}
+                      <div className="mt-3 pt-3 border-t border-[rgba(130,92,57,.1)]">
+                        <div className="flex items-start gap-2">
+                          <span className="mt-1 text-[0.7rem]">💡</span>
+                          <div className="flex-1">
+                            <p className="text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-sabhaMuted mb-1">
+                              Response
+                            </p>
+                            <p className="text-sm leading-6 text-sabhaText font-medium">{entry.body}</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   );
                 })}
