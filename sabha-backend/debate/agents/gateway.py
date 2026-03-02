@@ -72,6 +72,8 @@ def _build_turn_instruction(topic: str, agent_name: str, has_prior_turns: bool) 
         return (
             f"Debate this exact topic: {topic}\n"
             f"You are {agent_name}. Respond directly to the topic and engage with the earlier council turns.\n"
+            "Use simple English that a non-technical person can understand.\n"
+            "Use short, clear sentences.\n"
             "In 2-3 sentences:\n"
             "- state one point you agree with or build on\n"
             "- state one point you challenge, question, or refine\n"
@@ -82,6 +84,8 @@ def _build_turn_instruction(topic: str, agent_name: str, has_prior_turns: bool) 
     return (
         f"Debate this exact topic: {topic}\n"
         f"You are {agent_name}. Open the debate with a direct argument about the topic itself.\n"
+        "Use simple English that is easy to understand.\n"
+        "Use short, clear sentences.\n"
         "In 2-3 sentences, make a clear claim, explain why it matters, and set up a point other agents can challenge."
     )
 
