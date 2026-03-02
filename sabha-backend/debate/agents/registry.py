@@ -132,6 +132,17 @@ def seed_agents():
     return Agent.objects.filter(is_active=True).count()
 
 
+def ensure_default_agents():
+    """Ensure the default council exists in a fresh database"""
+    from debate.models import Agent
+
+    active_agents = Agent.objects.filter(is_active=True)
+    if active_agents.exists():
+        return active_agents.count()
+
+    return seed_agents()
+
+
 def get_phase(agent_name):
     """Get the discussion phase for a given agent"""
     return PHASE_MAP.get(agent_name, "discussion")

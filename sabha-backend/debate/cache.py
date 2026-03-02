@@ -14,6 +14,7 @@ except ImportError:
 
 # In-memory fallback cache
 _memory_cache = {}
+_CACHE_VERSION = "v4"
 
 
 def _get_redis_client():
@@ -33,7 +34,7 @@ def _get_redis_client():
 def _get_cache_key(question: str) -> str:
     """Generate a cache key from the question"""
     normalized = question.lower().strip()
-    return f"sabha:response:{hashlib.md5(normalized.encode()).hexdigest()}"
+    return f"sabha:response:{_CACHE_VERSION}:{hashlib.md5(normalized.encode()).hexdigest()}"
 
 
 def get_cached_response(question: str) -> dict | None:
@@ -79,6 +80,10 @@ def cache_response(question: str, response: dict, ttl: int = 3600) -> bool:
     Returns:
         True if cached successfully
     """
+    agent_responses = response.get("agent_responses", [])
+    if any("[Error" in item.get("content", "") for item in agent_responses):
+        return False
+
     cache_key = _get_cache_key(question)
     
     # Try Redis first

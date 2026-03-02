@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import Navbar from "../components/Navbar.jsx";
+import { createSession, triggerCouncil } from "../services/api.js";
 
 const BOT_META = [
   { name: "Sutradhara", role: "Orchestrator", tone: "Lead", color: "text-[#8f3f31]" },
@@ -8,6 +9,14 @@ const BOT_META = [
   { name: "Sahachara", role: "Synthesizer", tone: "Integrative", color: "text-[#7a3b2f]" },
   { name: "Nirdeshaka", role: "Planner", tone: "Actionable", color: "text-[#8a5a2f]" },
 ];
+
+const PHASE_HINTS = {
+  Framing: "Defines the question and the criteria the debate should use.",
+  Evidence: "Adds supporting evidence and examples to strengthen the case.",
+  Counterpoint: "Challenges earlier claims and exposes weak assumptions.",
+  Plan: "Turns the debate into a practical decision or rollout approach.",
+  Synthesis: "Combines the strongest points into the final answer.",
+};
 
 const DISCUSSION = [
   {
@@ -63,33 +72,14 @@ export default function Demo() {
 
     try {
       // Create session
-      const sessionRes = await fetch('http://localhost:8000/api/sessions/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          title: 'Sabha Demo Discussion',
-          topic: topic
-        })
+      const session = await createSession({
+        title: "Sabha Demo Discussion",
+        topic: topic.trim(),
       });
-
-      if (!sessionRes.ok) throw new Error('Failed to create session');
-      
-      const session = await sessionRes.json();
       setSessionId(session.id);
 
       // Trigger council
-      const councilRes = await fetch(
-        `http://localhost:8000/api/sessions/${session.id}/messages/`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ content: topic })
-        }
-      );
-
-      if (!councilRes.ok) throw new Error('Failed to run council');
-      
-      const data = await councilRes.json();
+      const data = await triggerCouncil(session.id, { content: topic.trim() });
       
       // Extract agent messages and format for display
       const agentMessages = data.messages
@@ -104,8 +94,8 @@ export default function Demo() {
       setConsensus(data.consensus || agentMessages[agentMessages.length - 1]?.body);
 
     } catch (error) {
-      console.error('Error:', error);
-      alert(`Error: ${error.message}. Make sure backend is running on port 8000.`);
+      console.error("Error:", error);
+      alert(`Error: ${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -113,10 +103,8 @@ export default function Demo() {
 
 
   return (
-    <div className="min-h-screen overflow-x-hidden text-sabhaText bg-[linear-gradient(180deg,#fbf9f5_0%,#f6f2ea_55%,#f1ece2_100%)]">
-      <div className="pointer-events-none fixed inset-0 -z-10 opacity-25 bg-[radial-gradient(circle_at_12%_14%,rgba(178,124,56,.12)_0,transparent_36%),radial-gradient(circle_at_88%_78%,rgba(139,62,47,.08)_0,transparent_38%)] sabha-fade" />
-
-      <div className="sabha-page-box">
+    <div className="sabha-heritage-bg text-sabhaText">
+      <div className="sabha-stage">
         <div
           className="mx-auto max-w-[1120px] px-[var(--page-gutter)] pt-6 pb-10 sm:pt-7"
           style={{ "--page-gutter": "clamp(18px, 6vw, 140px)" }}
@@ -125,9 +113,9 @@ export default function Demo() {
 
           <main className="mt-6 grid gap-5 lg:mt-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-7">
             <section className="space-y-4">
-              <div className="rounded-3xl border border-[rgba(130,92,57,.18)] bg-white p-4 shadow-[0_16px_36px_rgba(76,48,28,.12)] sabha-reveal sm:p-5">
+              <div className="sabha-manuscript-card sabha-border-frame sabha-reveal p-4 sm:p-5">
                 <div className="flex flex-wrap items-start justify-between gap-3">
-                  <div>
+                  <div className="sabha-title-panel">
                     <p className="text-[0.78rem] font-semibold tracking-[0.24em] text-sabhaMuted uppercase">
                       Live Assembly
                     </p>
@@ -164,7 +152,7 @@ export default function Demo() {
                     <button
                       type="submit"
                       disabled={loading || !topic.trim()}
-                      className="rounded-full border border-[rgba(126,53,39,.45)] bg-[#8f3f31] px-4 py-[9px] text-[0.88rem] font-semibold text-[#fff9f0] shadow-[0_8px_18px_rgba(101,43,31,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(101,43,31,.28)] active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+                      className="sabha-pillar-button px-4 py-[9px] text-[0.88rem] font-semibold transition active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       {loading ? 'Council Deliberating...' : 'Start Discussion'}
                     </button>
@@ -175,7 +163,7 @@ export default function Demo() {
                 </form>
               </div>
 
-              <div className="rounded-3xl border border-[rgba(130,92,57,.18)] bg-white p-4 shadow-[0_14px_30px_rgba(76,48,28,.1)] sabha-reveal sm:p-5" style={{ animationDelay: "140ms" }}>
+              <div className="sabha-manuscript-card sabha-border-frame sabha-reveal p-4 sm:p-5" style={{ animationDelay: "140ms" }}>
                 <p className="text-[0.78rem] font-semibold uppercase tracking-[0.2em] text-sabhaMuted">
                   Assembly Roles
                 </p>
@@ -197,7 +185,7 @@ export default function Demo() {
                 </div>
               </div>
 
-              <div className="rounded-3xl border border-[rgba(130,92,57,.18)] bg-white p-4 shadow-[0_14px_30px_rgba(76,48,28,.1)] sabha-reveal sm:p-5" style={{ animationDelay: "220ms" }}>
+              <div className="sabha-manuscript-card sabha-border-frame sabha-reveal p-4 sm:p-5" style={{ animationDelay: "220ms" }}>
                 <p className="text-[0.78rem] font-semibold uppercase tracking-[0.2em] text-sabhaMuted">
                   Consensus Snapshot
                 </p>
@@ -218,9 +206,9 @@ export default function Demo() {
               </div>
             </section>
 
-            <section className="rounded-3xl border border-[rgba(130,92,57,.18)] bg-white p-4 shadow-[0_18px_40px_rgba(76,48,28,.12)] sabha-reveal sm:p-5" style={{ animationDelay: "160ms" }}>
+            <section className="sabha-manuscript-card sabha-border-frame sabha-reveal p-4 sm:p-5" style={{ animationDelay: "160ms" }}>
               <div className="flex flex-wrap items-start justify-between gap-2">
-                <div>
+                <div className="sabha-title-panel">
                   <p className="text-[0.78rem] font-semibold uppercase tracking-[0.2em] text-sabhaMuted">
                     Transcript
                   </p>
@@ -231,13 +219,13 @@ export default function Demo() {
                 </div>
               </div>
 
-              <div className="mt-4 space-y-3 sm:mt-5 sm:space-y-4">
+              <div className="sabha-scroll-list mt-4 sm:mt-5">
                 {discussion.map((entry, index) => {
                   const meta = bots.find((bot) => bot.name === entry.bot);
                   return (
                     <div
                       key={`${entry.bot}-${index}`}
-                      className="rounded-2xl border border-[rgba(130,92,57,.16)] bg-[rgba(255,252,248,.96)] p-4 shadow-[0_8px_18px_rgba(82,51,25,.08)] sabha-reveal sm:p-5"
+                      className="sabha-manuscript-card sabha-border-frame sabha-reveal p-4 sm:p-5"
                       style={{ animationDelay: `${index * 80 + 240}ms` }}
                     >
                       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -252,23 +240,20 @@ export default function Demo() {
                         <span className="text-[0.7rem] text-sabhaMuted">Round {index + 1}</span>
                       </div>
                       
-                      {/* Agent Response */}
-                      <div className="mt-3">
+                      <div className="mt-3 rounded-2xl border border-[rgba(130,92,57,.1)] bg-[rgba(255,248,238,.72)] px-3 py-2">
                         <div className="flex items-start gap-2">
                           <span className="mt-1 text-[0.7rem]">💭</span>
                           <div className="flex-1">
                             <p className="text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-sabhaMuted mb-1">
-                              Reasoning
+                              Debate Move
                             </p>
-                            <p className="text-sm leading-6 text-sabhaMuted/70 italic">
-                              "{meta?.role || 'Agent'} analyzes the topic from {entry.phase} perspective, 
-                              considering prior council input and providing {meta?.tone?.toLowerCase() || 'reasoned'} insight."
+                            <p className="text-sm leading-6 text-sabhaMuted">
+                              {PHASE_HINTS[entry.phase] || "Adds a new turn to the council debate."}
                             </p>
                           </div>
                         </div>
                       </div>
 
-                      {/* Final Answer */}
                       <div className="mt-3 pt-3 border-t border-[rgba(130,92,57,.1)]">
                         <div className="flex items-start gap-2">
                           <span className="mt-1 text-[0.7rem]">💡</span>

@@ -3,11 +3,8 @@ import Navbar from "../components/Navbar.jsx";
 
 export default function Landing() {
   return (
-    <div className="min-h-screen overflow-x-hidden text-sabhaText bg-[linear-gradient(180deg,#fbf9f5_0%,#f6f2ea_55%,#f1ece2_100%)]">
-      {/* overlay */}
-      <div className="pointer-events-none fixed inset-0 -z-10 opacity-25 bg-[radial-gradient(circle_at_12%_14%,rgba(178,124,56,.12)_0,transparent_36%),radial-gradient(circle_at_88%_78%,rgba(139,62,47,.08)_0,transparent_38%)] sabha-fade" />
-
-      <div className="sabha-page-box">
+    <div className="sabha-heritage-bg text-sabhaText">
+      <div className="sabha-stage">
         <div
           className="mx-auto max-w-[1120px] px-[var(--page-gutter)] pt-7 pb-10"
           style={{ "--page-gutter": "clamp(18px, 6vw, 140px)" }}
@@ -17,7 +14,8 @@ export default function Landing() {
           <main className="mx-auto max-w-[1120px]">
           {/* hero */}
           <section className="grid items-center gap-8 border-b border-[rgba(130,92,57,.22)] pb-14 pt-2 md:grid-cols-[minmax(0,3fr)_minmax(0,2.2fr)]">
-            <div className="sabha-reveal" style={{ animationDelay: "80ms" }}>
+            <div className="sabha-reveal sabha-title-panel" style={{ animationDelay: "80ms" }}>
+              <div className="sabha-ornament-line mb-4 text-[0.7rem]">सभा</div>
               <p className="mb-2 font-dev text-[0.96rem] tracking-[0.06em] text-sabhaAccent">
                 सभायां युक्तिर्जायते ॥
               </p>
@@ -32,13 +30,13 @@ export default function Landing() {
               </p>
 
               <div className="mb-4 flex flex-wrap gap-3">
-                <button className="rounded-full border border-[rgba(126,53,39,.45)] bg-[#8f3f31] px-4 py-[9px] text-[0.9rem] font-semibold text-[#fff9f0] shadow-[0_8px_18px_rgba(101,43,31,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(101,43,31,.28)] active:translate-y-0">
+                <button className="sabha-pillar-button px-4 py-[9px] text-[0.9rem] font-semibold transition">
                   अनुभव आरभ्यते (Start Now)
                 </button>
 
                 <a
                   href="/demo"
-                  className="rounded-full border border-[rgba(130,92,57,.22)] bg-white px-4 py-[9px] text-[0.9rem] font-semibold text-sabhaMuted shadow-[0_6px_14px_rgba(82,51,25,.08)] transition hover:-translate-y-0.5 hover:border-[rgba(139,62,47,.4)] hover:text-sabhaAccent hover:shadow-[0_8px_18px_rgba(82,51,25,.12)]"
+                  className="sabha-outline-button px-4 py-[9px] text-[0.9rem] font-semibold transition"
                 >
                   दर्शन पश्य (View Demo)
                 </a>
@@ -52,7 +50,7 @@ export default function Landing() {
 
             {/* right panel */}
             <div
-              className="rounded-3xl border border-[rgba(130,92,57,.18)] bg-white p-5 shadow-[0_16px_40px_rgba(76,48,28,.12)] sabha-reveal"
+              className="sabha-hero-panel-traditional sabha-reveal p-5"
               style={{ animationDelay: "180ms" }}
             >
               <div className="mx-auto mb-4 flex aspect-square w-[min(270px,80vw)] items-center justify-center overflow-hidden rounded-full border border-[rgba(143,89,44,.6)] bg-[radial-gradient(circle_at_50%_42%,#fff8ea_0,#efd5ac_48%,#e4c18a_100%)] shadow-[inset_0_0_0_1px_rgba(255,245,227,.9),inset_0_8px_16px_rgba(255,255,255,.4),0_18px_40px_rgba(104,68,39,.28),0_0_40px_rgba(178,124,56,.12)] animate-gentlePulse relative">
@@ -81,7 +79,7 @@ export default function Landing() {
                 ))}
               </div>
 
-              <div className="rounded-2xl border border-[rgba(130,84,50,.2)] bg-[rgba(255,255,255,.9)] p-4">
+              <div className="sabha-manuscript-card px-4 py-4">
                 <p className="mb-1 font-bold text-sabhaAccent">Deliberative Reasoning Engine</p>
                 <p className="leading-7 text-sabhaMuted">
                   Route prompts through a council of specialized models. Capture arguments,
@@ -163,14 +161,12 @@ function Section({ id, title, children, alt = false, footer = false, delay = 0 }
     <section
       id={id}
       className={[
-        "relative border-b border-[rgba(130,92,57,.22)] py-14 sabha-reveal",
-        alt ? "bg-[rgba(255,255,255,.85)] -mx-[var(--page-gutter)] px-[var(--page-gutter)]" : "",
+        "sabha-section-band relative border-b border-[rgba(130,92,57,.22)] py-14 sabha-reveal",
+        alt ? "bg-[rgba(255,248,238,.82)] -mx-[var(--page-gutter)] px-[var(--page-gutter)]" : "",
         footer ? "border-b-0 pb-5" : "",
       ].join(" ")}
       style={{ animationDelay: `${delay}ms` }}
     >
-      <div className="absolute right-[2px] top-2 text-[0.88rem] text-[rgba(139,62,47,.34)]">✶</div>
-
       <div className="mb-5 max-w-[670px]">
         <h2 className="mb-1 text-[1.7rem] font-serif text-sabhaAccent">{title}</h2>
         <p className="leading-7 text-sabhaMuted">{children?.[0] ?? ""}</p>
@@ -187,7 +183,7 @@ function Cards({ items }) {
       {items.map(([h, p], index) => (
         <div
           key={h}
-          className="relative overflow-hidden rounded-2xl border border-[rgba(130,92,57,.18)] bg-white p-4 shadow-[0_10px_24px_rgba(82,51,25,.08)] transition hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(82,51,25,.12)] sabha-reveal"
+          className="sabha-manuscript-card sabha-border-frame relative overflow-hidden p-4 transition hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(82,51,25,.12)] sabha-reveal"
           style={{ animationDelay: `${index * 90 + 140}ms` }}
         >
           <h3 className="mb-1 text-[1.05rem] font-semibold text-sabhaAccent">{h}</h3>
@@ -201,7 +197,7 @@ function Cards({ items }) {
 function ArchStep({ chip, title, body, delay = 0 }) {
   return (
     <div
-      className="rounded-2xl border border-[rgba(130,92,57,.18)] bg-white p-4 shadow-[0_10px_24px_rgba(82,51,25,.08)] sabha-reveal"
+      className="sabha-manuscript-card sabha-border-frame p-4 sabha-reveal"
       style={{ animationDelay: `${delay}ms` }}
     >
       <span className="inline-flex items-center rounded-full border border-[rgba(139,62,47,.32)] bg-[rgba(255,244,227,.72)] px-[10px] py-[3px] text-[0.7rem] font-bold tracking-[0.08em] text-[#7c3d2e] uppercase">

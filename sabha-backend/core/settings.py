@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -29,7 +30,10 @@ SECRET_KEY = 'django-insecure-i)^fh047!#)f-xd6omcdb==%*4xqe$+)y0!uvurl+c^ta)3by_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+]
 
 
 # Application definition
@@ -126,7 +130,12 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",   # Vite frontend
+    origin.strip()
+    for origin in os.getenv(
+        "CORS_ALLOWED_ORIGINS",
+        "http://localhost:5173,http://127.0.0.1:5173,http://localhost:5174,http://127.0.0.1:5174",
+    ).split(",")
+    if origin.strip()
 ]
 
 CORS_ALLOW_CREDENTIALS = True

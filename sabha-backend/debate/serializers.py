@@ -51,10 +51,25 @@ class SessionListSerializer(serializers.ModelSerializer):
 
 class SessionSerializer(serializers.ModelSerializer):
     messages = MessageSerializer(many=True, read_only=True)
+    answer = serializers.CharField(source='consensus', read_only=True)
+    reply = serializers.CharField(source='consensus', read_only=True)
+    transcript = MessageSerializer(source='messages', many=True, read_only=True)
     
     class Meta:
         model = Session
-        fields = ['id', 'title', 'topic', 'status', 'consensus', 'messages', 'created_at', 'updated_at']
+        fields = [
+            'id',
+            'title',
+            'topic',
+            'status',
+            'consensus',
+            'answer',
+            'reply',
+            'messages',
+            'transcript',
+            'created_at',
+            'updated_at',
+        ]
 
 
 class SessionCreateSerializer(serializers.ModelSerializer):
@@ -66,3 +81,22 @@ class SessionCreateSerializer(serializers.ModelSerializer):
 
 class TriggerCouncilSerializer(serializers.Serializer):
     content = serializers.CharField(required=True)
+
+
+class DebateRequestSerializer(serializers.Serializer):
+    title = serializers.CharField(required=False, allow_blank=True, max_length=200)
+    topic = serializers.CharField(required=False, allow_blank=True)
+    content = serializers.CharField(required=False, allow_blank=True)
+
+    def validate(self, attrs):
+        topic = (attrs.get('topic') or '').strip()
+        content = (attrs.get('content') or '').strip()
+        prompt = content or topic
+
+        if not prompt:
+            raise serializers.ValidationError("Provide either 'content' or 'topic'.")
+
+        attrs['prompt'] = prompt
+        attrs['title'] = (attrs.get('title') or 'Sabha Debate').strip() or 'Sabha Debate'
+        attrs['topic'] = topic or prompt
+        return attrs

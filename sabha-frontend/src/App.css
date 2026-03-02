@@ -14,6 +14,255 @@
   --sabha-gutter: clamp(18px, 6vw, 140px);
 }
 
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--sabha-text);
+  background:
+    radial-gradient(circle at top, rgba(199, 156, 96, 0.18), transparent 28%),
+    linear-gradient(180deg, #efe3cb 0%, #e7d9be 52%, #deceb1 100%);
+  font-family: "Manrope", sans-serif;
+}
+
+.sabha-heritage-bg {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background:
+    linear-gradient(180deg, rgba(255, 249, 239, 0.84), rgba(244, 233, 212, 0.88)),
+    repeating-linear-gradient(
+      0deg,
+      rgba(118, 79, 46, 0.045) 0,
+      rgba(118, 79, 46, 0.045) 1px,
+      transparent 1px,
+      transparent 28px
+    );
+}
+
+.sabha-heritage-bg::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.42;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(178, 124, 56, 0.2), transparent 24%),
+    radial-gradient(circle at 88% 18%, rgba(128, 48, 37, 0.11), transparent 24%),
+    radial-gradient(circle at 52% 100%, rgba(178, 124, 56, 0.12), transparent 28%);
+}
+
+.sabha-stage {
+  position: relative;
+  z-index: 1;
+  margin: 18px auto 24px;
+  max-width: 1280px;
+  border: 1px solid rgba(110, 71, 38, 0.24);
+  border-radius: 22px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(255, 252, 246, 0.95), rgba(248, 241, 228, 0.94)),
+    repeating-linear-gradient(
+      90deg,
+      rgba(115, 78, 48, 0.018) 0,
+      rgba(115, 78, 48, 0.018) 8px,
+      transparent 8px,
+      transparent 16px
+    );
+  box-shadow:
+    0 28px 70px rgba(75, 50, 28, 0.18),
+    inset 0 0 0 2px rgba(255, 248, 235, 0.82),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+.sabha-stage::before,
+.sabha-stage::after {
+  content: "";
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  height: 18px;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent, rgba(144, 97, 56, 0.14), transparent),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 22px,
+      rgba(144, 97, 56, 0.24) 22px,
+      rgba(144, 97, 56, 0.24) 26px,
+      transparent 26px,
+      transparent 48px
+    );
+}
+
+.sabha-stage::before {
+  top: 12px;
+}
+
+.sabha-stage::after {
+  bottom: 12px;
+}
+
+.sabha-manuscript-card {
+  position: relative;
+  border: 1px solid rgba(123, 84, 50, 0.22);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 250, 240, 0.98), rgba(250, 241, 225, 0.96)),
+    repeating-linear-gradient(
+      0deg,
+      rgba(113, 74, 41, 0.03) 0,
+      rgba(113, 74, 41, 0.03) 1px,
+      transparent 1px,
+      transparent 24px
+    );
+  box-shadow:
+    0 14px 34px rgba(78, 51, 26, 0.11),
+    inset 0 0 0 1px rgba(255, 251, 243, 0.84);
+}
+
+.sabha-manuscript-card::before {
+  content: "॥";
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  color: rgba(133, 76, 43, 0.36);
+  font-family: "Noto Serif Devanagari", serif;
+  font-size: 1rem;
+  letter-spacing: 0.2em;
+}
+
+.sabha-border-frame {
+  position: relative;
+}
+
+.sabha-border-frame::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(175, 129, 69, 0.16);
+  border-radius: 14px;
+  pointer-events: none;
+}
+
+.sabha-section-band {
+  position: relative;
+}
+
+.sabha-section-band::before {
+  content: "ॐ";
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-family: "Noto Serif Devanagari", serif;
+  font-size: 1rem;
+  color: rgba(139, 62, 47, 0.22);
+}
+
+.sabha-ornament-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(123, 82, 49, 0.72);
+  font-family: "Noto Serif Devanagari", serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.sabha-ornament-line::before,
+.sabha-ornament-line::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(145, 102, 60, 0.45), transparent);
+}
+
+.sabha-title-panel {
+  position: relative;
+  padding-left: 18px;
+}
+
+.sabha-title-panel::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #c08a45, #8b3e2f);
+}
+
+.sabha-pillar-button {
+  border-radius: 999px;
+  border: 1px solid rgba(127, 65, 37, 0.5);
+  background:
+    linear-gradient(180deg, #a5523b 0%, #7c3729 70%, #632a20 100%);
+  color: #fff6ea;
+  box-shadow:
+    0 10px 24px rgba(95, 40, 30, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
+.sabha-pillar-button:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 14px 30px rgba(95, 40, 30, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
+.sabha-outline-button {
+  border-radius: 999px;
+  border: 1px solid rgba(127, 65, 37, 0.26);
+  background: rgba(255, 249, 240, 0.86);
+  color: var(--sabha-accent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.sabha-outline-button:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 245, 231, 0.96);
+}
+
+.sabha-hero-panel-traditional {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(120, 79, 46, 0.22);
+  border-radius: 28px;
+  background:
+    linear-gradient(180deg, rgba(252, 244, 227, 0.95), rgba(241, 224, 191, 0.92)),
+    radial-gradient(circle at center, rgba(255, 248, 228, 0.8), transparent 54%);
+  box-shadow:
+    0 18px 44px rgba(88, 59, 31, 0.18),
+    inset 0 0 0 1px rgba(255, 248, 230, 0.88);
+}
+
+.sabha-hero-panel-traditional::before {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(139, 96, 56, 0.18);
+  border-radius: 22px;
+  pointer-events: none;
+}
+
+.sabha-panel-strip {
+  background:
+    linear-gradient(90deg, rgba(132, 76, 45, 0.08), rgba(197, 150, 87, 0.15), rgba(132, 76, 45, 0.08));
+  border-top: 1px solid rgba(132, 76, 45, 0.08);
+  border-bottom: 1px solid rgba(132, 76, 45, 0.08);
+}
+
+.sabha-scroll-list > * + * {
+  margin-top: 12px;
+}
+
 .sabha-root {
   position: relative;
   min-height: 100vh;

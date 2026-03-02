@@ -15,7 +15,8 @@ from debate.serializers import (
     SessionListSerializer,
     SessionCreateSerializer,
     MessageSerializer,
-    TriggerCouncilSerializer
+    TriggerCouncilSerializer,
+    DebateRequestSerializer,
 )
 from debate.agents.orchestrator import run_council
 
@@ -46,6 +47,40 @@ class SessionViewSet(viewsets.ModelViewSet):
         elif self.action == 'create':
             return SessionCreateSerializer
         return SessionSerializer
+
+    @action(detail=False, methods=['post'], url_path='debate')
+    def debate(self, request):
+        """
+        Create a session and run the council in a single backend call.
+
+        POST /api/sessions/debate/
+        Body: {"topic": "..."} or {"content": "..."} or {"title": "...", "topic": "..."}
+        """
+        serializer = DebateRequestSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        prompt = serializer.validated_data['prompt']
+        session = Session.objects.create(
+            title=serializer.validated_data['title'],
+            topic=serializer.validated_data['topic'],
+        )
+
+        try:
+            Message.objects.create(
+                session=session,
+                role='user',
+                content=prompt
+            )
+
+            run_council(session.id, prompt)
+            session.refresh_from_db()
+            return Response(SessionSerializer(session).data, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            session.delete()
+            return Response(
+                {'detail': f'Council encountered an error: {str(e)}'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
     
     @action(detail=True, methods=['post'])
     def messages(self, request, pk=None):
@@ -102,4 +137,3 @@ class MessageViewSet(viewsets.ReadOnlyModelViewSet):
         if session_id:
             queryset = queryset.filter(session_id=session_id)
         return queryset
-

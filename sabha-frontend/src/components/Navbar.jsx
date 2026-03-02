@@ -11,19 +11,22 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="mx-auto mb-9 flex max-w-[1120px] flex-col gap-3 rounded-2xl border border-[rgba(130,92,57,.22)] bg-[rgba(255,253,248,.88)] px-4 py-3 shadow-[0_12px_32px_rgba(75,43,20,.12),inset_0_1px_0_rgba(255,255,255,.5)] backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:rounded-full">
+    <header className="sabha-manuscript-card sabha-border-frame mx-auto mb-9 flex max-w-[1120px] flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
       <div className="flex w-full items-center justify-between gap-3 sm:w-auto">
-        <div className="flex items-center gap-2 text-[0.94rem] font-semibold tracking-[0.14em] uppercase">
-          <span className="inline-flex h-[34px] w-[34px] items-center justify-center rounded-full border border-sabhaGold bg-[radial-gradient(circle_at_30%_25%,#ffe5bb,#e7bf84)] font-dev text-[1.2rem] text-sabhaAccent shadow-[0_4px_14px_rgba(107,67,32,.25),inset_0_1px_2px_rgba(255,255,255,.6)] transition hover:scale-[1.08] hover:shadow-[0_6px_18px_rgba(107,67,32,.35),inset_0_1px_2px_rgba(255,255,255,.6)]">
+        <div className="flex items-center gap-3 text-[0.94rem] font-semibold tracking-[0.14em] uppercase">
+          <span className="inline-flex h-[38px] w-[38px] items-center justify-center rounded-full border border-sabhaGold bg-[radial-gradient(circle_at_30%_25%,#fbe9bf,#ddb175)] font-dev text-[1.2rem] text-sabhaAccent shadow-[0_6px_16px_rgba(107,67,32,.28),inset_0_1px_2px_rgba(255,255,255,.6)] transition hover:scale-[1.04]">
             स
           </span>
-          <span>Sabha</span>
+          <div className="leading-tight">
+            <div className="text-[0.72rem] font-dev tracking-[0.22em] text-sabhaAccent">सभासदां</div>
+            <span className="font-serif text-[1.02rem] tracking-[0.12em] text-sabhaHeading">Sabha</span>
+          </div>
         </div>
 
         <div className="flex items-center gap-2 sm:hidden">
           <a
             href="/#contact"
-            className="rounded-full border border-[rgba(139,62,47,.40)] bg-[linear-gradient(135deg,rgba(255,242,226,.85),rgba(255,235,205,.80))] px-3 py-[7px] text-[0.82rem] font-semibold text-sabhaAccent shadow-[inset_0_1px_0_rgba(255,255,255,.4),0_2px_8px_rgba(139,62,47,.1)] transition hover:shadow-[inset_0_1px_0_rgba(255,255,255,.4),0_4px_12px_rgba(139,62,47,.15)]"
+            className="sabha-outline-button px-3 py-[7px] text-[0.82rem] font-semibold"
           >
             Join
           </a>
@@ -32,7 +35,7 @@ export default function Navbar() {
             aria-label="Toggle menu"
             aria-expanded={open}
             onClick={() => setOpen((prev) => !prev)}
-            className="rounded-full border border-[rgba(139,62,47,.30)] bg-white/80 px-3 py-[7px] text-[0.82rem] font-semibold text-sabhaAccent shadow-[inset_0_1px_0_rgba(255,255,255,.4)]"
+            className="rounded-full border border-[rgba(139,62,47,.30)] bg-[rgba(255,249,240,.92)] px-3 py-[7px] text-[0.82rem] font-semibold text-sabhaAccent shadow-[inset_0_1px_0_rgba(255,255,255,.55)]"
           >
             {open ? "Close" : "Menu"}
           </button>
@@ -44,7 +47,7 @@ export default function Navbar() {
           <a
             key={href}
             href={href}
-            className="rounded-full px-3 py-[7px] text-[0.88rem] font-semibold text-sabhaMuted transition hover:-translate-y-[1px] hover:border hover:border-[rgba(139,62,47,.30)] hover:bg-[rgba(255,246,233,.95)] hover:text-sabhaAccent"
+            className="rounded-full px-3 py-[7px] text-[0.88rem] font-semibold text-sabhaMuted transition hover:-translate-y-[1px] hover:bg-[rgba(255,246,233,.95)] hover:text-sabhaAccent"
           >
             {label}
           </a>
@@ -52,14 +55,14 @@ export default function Navbar() {
 
         <a
           href="/#contact"
-          className="rounded-full border border-[rgba(139,62,47,.40)] bg-[linear-gradient(135deg,rgba(255,242,226,.85),rgba(255,235,205,.80))] px-3 py-[7px] text-[0.88rem] font-semibold text-sabhaAccent shadow-[inset_0_1px_0_rgba(255,255,255,.4),0_2px_8px_rgba(139,62,47,.1)] transition hover:shadow-[inset_0_1px_0_rgba(255,255,255,.4),0_4px_12px_rgba(139,62,47,.15)]"
+          className="sabha-outline-button px-3 py-[7px] text-[0.88rem] font-semibold"
         >
           Join the Assembly
         </a>
       </nav>
 
       {open ? (
-        <div className="flex w-full flex-col gap-2 rounded-2xl border border-[rgba(130,92,57,.22)] bg-[rgba(255,252,247,.96)] p-3 shadow-[0_16px_32px_rgba(75,43,20,.12)] sm:hidden">
+        <div className="sabha-panel-strip flex w-full flex-col gap-2 rounded-2xl border border-[rgba(130,92,57,.22)] bg-[rgba(255,252,247,.96)] p-3 shadow-[0_16px_32px_rgba(75,43,20,.12)] sm:hidden">
           {navLinks.map(([href, label]) => (
             <a
               key={href}
@@ -73,7 +76,7 @@ export default function Navbar() {
           <a
             href="/#contact"
             onClick={() => setOpen(false)}
-            className="rounded-full border border-[rgba(139,62,47,.40)] bg-[linear-gradient(135deg,rgba(255,242,226,.85),rgba(255,235,205,.80))] px-3 py-2 text-[0.9rem] font-semibold text-sabhaAccent shadow-[inset_0_1px_0_rgba(255,255,255,.4),0_2px_8px_rgba(139,62,47,.1)]"
+            className="sabha-outline-button px-3 py-2 text-[0.9rem] font-semibold"
           >
             Join the Assembly
           </a>
