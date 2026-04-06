@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import os
 
 # Load environment variables from .env file
 load_dotenv()
@@ -30,10 +31,11 @@ SECRET_KEY = 'django-insecure-i)^fh047!#)f-xd6omcdb==%*4xqe$+)y0!uvurl+c^ta)3by_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
-]
+ALLOWED_HOSTS = (
+    [h.strip() for h in os.getenv("ALLOWED_HOSTS").split(",") if h.strip()]
+    if os.getenv("ALLOWED_HOSTS")
+    else ["localhost", "127.0.0.1"]
+)
 
 
 # Application definition
@@ -140,6 +142,11 @@ CORS_ALLOWED_ORIGINS = [
 
 CORS_ALLOW_CREDENTIALS = True
 
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 20,
+}
+
 # Celery Configuration
-CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL", "redis://localhost:6379/0")
-CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND", "redis://localhost:6379/0")
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL", os.environ.get("REDIS_URL", "redis://localhost:6379/0"))
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND", os.environ.get("REDIS_URL", "redis://localhost:6379/0"))

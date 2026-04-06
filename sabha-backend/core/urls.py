@@ -16,8 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.schemas import get_schema_view
+
+schema_view = get_schema_view(
+    title="Sabha API",
+    description="API for managing Sabha agents, sessions, and messages",
+    version="1.0.0",
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('debate.urls')),
+    path('api/v1/', include('debate.urls')),
+    path('api/schema/', schema_view, name='api-schema'),
 ]

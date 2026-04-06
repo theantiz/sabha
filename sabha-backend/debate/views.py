@@ -6,8 +6,10 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+from rest_framework.views import APIView
 
 from debate.models import Agent, Session, Message
+from debate.demo import get_demo_questions
 from debate.serializers import (
     AgentSerializer,
     AgentDetailSerializer,
@@ -137,3 +139,24 @@ class MessageViewSet(viewsets.ReadOnlyModelViewSet):
         if session_id:
             queryset = queryset.filter(session_id=session_id)
         return queryset
+
+
+
+class DemoQuestionsView(APIView):
+    """
+    Read-only endpoint that returns a list of demo questions.
+
+    The frontend can rotate through these questions to showcase Sabha
+    without hardcoding them client-side.
+    """
+    permission_classes = [AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        questions = get_demo_questions()
+        return Response(
+            {
+                "count": len(questions),
+                "questions": questions,
+            },
+            status=status.HTTP_200_OK,
+        )
